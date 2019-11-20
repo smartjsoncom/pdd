@@ -1,0 +1,24 @@
+{
+    "name": "smartjson/pdd-union-sdk",
+    "description": "pingduoduo pdd php sdk",
+    "keywords": ["pdd", "pinduoduo", "duoduojinbao", "duoduoke"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jason Sun",
+            "email": "chensongah@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": "^5.5|^7.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmartJson\\Pdd\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+}
