@@ -4,6 +4,10 @@
 - 该SDK使用 composer 对src下面的代码进行命名空间自动导入，namespace 自动导入的规则是[psr4 规范](https://www.php-fig.org/psr/psr-4/)
 - 该SDK共有2个文件夹，src文件夹下面是sdk主功能文件夹。example文件夹下面是所有接口的demo，作为测试样例参考。
 
+## 安装
+```php
+composer require smartjson/pdd-union-sdk
+```
 ## src文件夹下面文件功能说明
 * PopAccessTokenClient 类
 	- generate : 根据从授权后回调地址那里拿到的code 值，然后去服务器获取access_token和refresh_token以及过期时间等值
