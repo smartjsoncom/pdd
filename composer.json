@@ -20,5 +20,5 @@
             "SmartJson\\Pdd\\": "src/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "stable"
 }
