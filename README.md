@@ -1,13 +1,14 @@
 ## 拼多多开放平台PHP版本的SDK
 - 环境要求：php 5.5版本及以上
-- 执行一下 composer install 安装命令
 - 该SDK使用 composer 对src下面的代码进行命名空间自动导入，namespace 自动导入的规则是[psr4 规范](https://www.php-fig.org/psr/psr-4/)
 - 该SDK共有2个文件夹，src文件夹下面是sdk主功能文件夹。example文件夹下面是所有接口的demo，作为测试样例参考。
+- QQ群交流：239807196
 
 ## 安装
 ```php
 composer require smartjson/pdd-union-sdk
 ```
+
 ## src文件夹下面文件功能说明
 * PopAccessTokenClient 类
 	- generate : 根据从授权后回调地址那里拿到的code 值，然后去服务器获取access_token和refresh_token以及过期时间等值
@@ -35,17 +36,13 @@ $clientSecret = "your app clientSecret";
 $refreshToken = "your app refreshToken";
 $code = "your code";
 
-
 $accessTokenClient = new PopAccessTokenClient($clientId,$clientSecret);
-
  
 // 生成AccessToken
 
 $result = $accessTokenClient->generate($code);
 $result = json_encode($result->getContent(),JSON_UNESCAPED_UNICODE);
-echo $result;
-
- 
+echo $result; 
 
 // 刷新AccessToken
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartJson\Pdd\Token;
 
 use SmartJson\Pdd\PopBaseJsonEntity;
@@ -6,7 +7,6 @@ use SmartJson\Pdd\PopBaseJsonEntity;
 /**
  * RefreshAccessToken request类
  */
-
 class RefreshAccessTokenRequest extends PopBaseJsonEntity
 {
     /**

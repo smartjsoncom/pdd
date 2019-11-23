@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartJson\Pdd;
 
 use SmartJson\Pdd\Token\AccessTokenRequest;
@@ -28,17 +29,20 @@ class PopAccessTokenClient
      * @param $clientId 开放平台分配的clientId
      * @param $clientSecret 开放平台分配的clientSecret
      */
-    public function  __construct($clientId, $clientSecret){
+    public function __construct($clientId, $clientSecret)
+    {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
     }
 
     /**
      * @param $code 授权获取到的code
-     * @return  返回AccessTokenResponse对象
+     * @return PopHttpResponse 返回AccessTokenResponse对象
+     * @throws PopHttpException
      */
-    public function generate($code){
-        if(empty($code)){
+    public function generate($code)
+    {
+        if (empty($code)) {
             throw new PopHttpException("Code不能为空");
         }
         $request = new AccessTokenRequest();
@@ -54,10 +58,12 @@ class PopAccessTokenClient
 
     /**
      * @param $refreshToken generate接口获取到的refresh_token，refresh_token有效期是30天
-     * @return 返回刷新后的access_token
+     * @return PopHttpResponse 返回刷新后的access_token
+     * @throws PopHttpException
      */
-    public function refresh($refreshToken){
-        if(empty($refreshToken)){
+    public function refresh($refreshToken)
+    {
+        if (empty($refreshToken)) {
             throw new PopHttpException("Refresh token 不能为空");
         }
 
@@ -72,26 +78,26 @@ class PopAccessTokenClient
         return $response;
     }
 
-    private function postCurl($request){
+    private function postCurl($request)
+    {
         $ch = curl_init();
         $curlVersion = curl_version();
-        $ua = "PopSDK/".self::$VERSION." (".PHP_OS.") PHP/".PHP_VERSION." CURL/".$curlVersion['version']." "
-            .$this->clientId;
+        $ua = "PopSDK/" . self::$VERSION . " (" . PHP_OS . ") PHP/" . PHP_VERSION . " CURL/" . $curlVersion['version'] . " " . $this->clientId;
 
         //设置超时
         curl_setopt($ch, CURLOPT_TIMEOUT, self::$SECONDS);
 
-        curl_setopt($ch,CURLOPT_URL, self::$OAUTH_SERVER_URL);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);//严格校验
-        curl_setopt($ch,CURLOPT_USERAGENT, $ua);
+        curl_setopt($ch, CURLOPT_URL, self::$OAUTH_SERVER_URL);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//严格校验
+        curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         //设置header
         $headers = array(
             "Content-type: application/json;charset='utf-8'",
             "Accept: application/json",
             "Cache-Control: no-cache",
             "Pragma: no-cache",
-            "Pdd-Sdk-Version: ".self::$VERSION,
+            "Pdd-Sdk-Version: " . self::$VERSION,
             "Pdd-Sdk-Type: PHP"
         );
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -110,7 +116,7 @@ class PopAccessTokenClient
         $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         //返回结果
-        if($raw_response){
+        if ($raw_response) {
             curl_close($ch);
 
             $response = new PopHttpResponse();

@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartJson\Pdd;
 
 /**
@@ -44,7 +45,7 @@ abstract class PopBaseHttpRequest extends PopBaseJsonEntity
 
     protected final function setUserParam(&$paramMap, $name, $param)
     {
-        if (!is_null($param)&&$param !== "") {
+        if (!is_null($param) && $param !== "") {
             if ($this->isPrimaryType($param)) {
                 $paramMap[$name] = $param;
             } else {

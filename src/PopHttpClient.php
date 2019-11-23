@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartJson\Pdd;
 
 /**
@@ -9,7 +10,7 @@ class PopHttpClient
     /**
      * SDK版本号
      */
-    public static $VERSION="0.0.1";
+    public static $VERSION = "0.0.1";
 
     /**
      * 接口超时时间
@@ -24,7 +25,7 @@ class PopHttpClient
     private $clientId;
 
     private $clientSecret;
-    
+
     private $apiServerUrl = "https://gw-api.pinduoduo.com/api/router";
 
     /**
@@ -32,18 +33,19 @@ class PopHttpClient
      * @param $clientId 开放平台分配的clientId
      * @param $clientSecret 开放平台分配的clientSecret
      */
-    public function  __construct($clientId, $clientSecret){
+    public function __construct($clientId, $clientSecret)
+    {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
     }
 
     /**
-     * 接口调用函数
      * @param $request 是 Array 类型，里面包含API接口名称type（必填）、data_type（返回数据格式选填）和接口其他参数
-     * @param $access_token 表示调用接口的授权码
-     * @return 接口返回信息
+     * @param string $access_token 表示调用接口的授权码
+     * @return PopHttpResponse 接口返回信息
      */
-    public function syncInvoke($request, $access_token = ""){
+    public function syncInvoke($request, $access_token = "")
+    {
 
         $params = $this->uniqueParams($request, $access_token);
 
@@ -58,23 +60,26 @@ class PopHttpClient
 
     /**
      * 构造全部参数
-     * @param $request请求参数 $access_token 授权参数
-     * @return 构造后的所有参数
+     *
+     * @param $request 请求参数 $access_token 授权参数
+     * @param $access_token
+     * @return mixed 构造后的所有参数
      */
-    private function uniqueParams($request, $access_token){
+    private function uniqueParams($request, $access_token)
+    {
 
         $params = $request->getParamsMap();
 
         $params['client_id'] = $this->clientId;
 
-        if($access_token){
+        if ($access_token) {
             $params['access_token'] = $access_token;
         }
 
         //把boolean转为true 和 false
-        foreach ($params as $key=>$val){
-            if(is_bool($val)){
-                $params[$key] = $val?"true":"false";
+        foreach ($params as $key => $val) {
+            if (is_bool($val)) {
+                $params[$key] = $val ? "true" : "false";
             }
         }
 
@@ -82,10 +87,11 @@ class PopHttpClient
     }
 
     /**
-     * @param $request 请求的参数
-     * @return 返回md5后的sign值
+     * @param $params 请求的参数
+     * @return string 返回md5后的sign值
      */
-    private function makeSign($params){
+    private function makeSign($params)
+    {
 
         //签名步骤一：按字典序排序参数
         ksort($params);
@@ -109,36 +115,36 @@ class PopHttpClient
     private function toUrlParams($params)
     {
         $buff = "";
-        foreach ($params as $k => $v)
-        {
-            if($k != "sign" && $v !== "" && !is_array($v)){
-                $buff .= $k . $v ;
+        foreach ($params as $k => $v) {
+            if ($k != "sign" && $v !== "" && !is_array($v)) {
+                $buff .= $k . $v;
             }
         }
         return $buff;
     }
-    
-    private function postCurl($params){
+
+    private function postCurl($params)
+    {
         $ch = curl_init();
         $curlVersion = curl_version();
-        $ua = "PopSDK/".self::$VERSION." (".PHP_OS.") PHP/".PHP_VERSION." CURL/".$curlVersion['version']." "
-            .$this->clientId;
+        $ua = "PopSDK/" . self::$VERSION . " (" . PHP_OS . ") PHP/" . PHP_VERSION . " CURL/" . $curlVersion['version'] . " "
+            . $this->clientId;
 
         //设置超时
         curl_setopt($ch, CURLOPT_TIMEOUT, self::$SECONDS);
 
-        curl_setopt($ch,CURLOPT_URL, $this->apiServerUrl);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);//严格校验
-        curl_setopt($ch,CURLOPT_USERAGENT, $ua);
+        curl_setopt($ch, CURLOPT_URL, $this->apiServerUrl);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//严格校验
+        curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         //设置header
-        curl_setopt($ch, CURLOPT_HEADER,false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
 
         //设置header
         $headers = array(
             "Cache-Control: no-cache",
             "Pragma: no-cache",
-            "Pdd-Sdk-Version: ".self::$VERSION,
+            "Pdd-Sdk-Version: " . self::$VERSION,
             "Pdd-Sdk-Type: PHP"
         );
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -155,7 +161,7 @@ class PopHttpClient
         $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         //返回结果
-        if($raw_response){
+        if ($raw_response) {
             curl_close($ch);
 
             $response = new PopHttpResponse();

@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartJson\Pdd\Common;
 
 /**
@@ -8,8 +9,8 @@ namespace SmartJson\Pdd\Common;
 class JsonUtil
 {
     /**
-     * @param $doc属性字段的注解
-     * @return 然后数组，$arr[0]是类型， $arr[1]是映射的名称
+     * @param $doc 属性字段的注解
+     * @return array|null 然后数组，$arr[0]是类型， $arr[1]是映射的名称
      */
     public static function parseDoc($doc)
     {

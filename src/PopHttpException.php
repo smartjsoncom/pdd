@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartJson\Pdd;
 
 /**
@@ -6,7 +7,8 @@ namespace SmartJson\Pdd;
  */
 class PopHttpException extends \Exception
 {
-    public function errorMessage(){
+    public function errorMessage()
+    {
         return $this->getMessage();
     }
 }

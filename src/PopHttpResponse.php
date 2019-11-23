@@ -1,11 +1,13 @@
 <?php
+
 namespace SmartJson\Pdd;
 
 /**
  * Pop response 类
  */
 
-class PopHttpResponse{
+class PopHttpResponse
+{
     /**
      * @var int
      */
@@ -79,8 +81,8 @@ class PopHttpResponse{
      */
     public function getContent()
     {
-        if($this->content === null){
-            $this->content = json_decode($this->getBody(),true);
+        if ($this->content === null) {
+            $this->content = json_decode($this->getBody(), true);
         }
         return $this->content;
     }
