@@ -1,6 +1,6 @@
 {
     "name": "smartjson/pdd-union-sdk",
-    "description": "pingduoduo pdd php sdk",
+    "description": "pingduoduo pdd php sdk 拼多多 多多客SDK",
     "keywords": ["pdd", "pinduoduo", "duoduojinbao", "duoduoke"],
     "type": "library",
     "license": "MIT",
